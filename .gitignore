@@ -1,1 +1,4 @@
 data/*
+streamlit_app/car_etr.pkl
+streamlit_app/car_rf.pkl
+streamlit_app/df_model.csv
