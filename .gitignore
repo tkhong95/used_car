@@ -5,3 +5,5 @@ streamlit_app/df_model.csv
 streamlit_app/df_dummy.csv
 streamlit_app/etr_pipe.pkl
 streamlit_app/rf_pipe.pkl
+streamlit_app/etr_pipe_price.pkl
+streamlit_app/rf_pipe_price.pkl
