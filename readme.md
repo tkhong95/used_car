@@ -1,80 +1,87 @@
-# Capstone Project
+# Capstone Project: Predicting Used Car Price and Used Car Recommender System
 
-Your Capstone project is the culmination of your time at GA. You will be tasked with developing an interesting question, collecting the data required to model that data, developing the strongest model (or models) for prediction, and communicating those findings to other data scientists and non-technical individuals. This introductory document lays out the five check-ins for the project and their due dates.
+## Problem Statement
 
-## Your Deliverables
+The price of used cars has increased after the coronavirus pandemic due to the issue of supply chain ([source](https://www.cnbc.com/2023/09/08/used-vehicle-prices-may-have-bottomed-for-2023.html#:~:text=Used%20vehicle%20prices%20have%20been,high%20prices%20amid%20resilient%20demand.)). Making a decision on buying and selling a car is challenging. As a data scientist, we would like to help buyers and sellers on buying and selling their car. The purpose of this project is to build a model to predict the price of used cars and a used car recommender system. Those models will help sellers when they are planning to sell their car and buyers to have an idea when they are looking for a used car. 
 
-- A well-made predictive model using either structured or unstructured machine learning techniques (or other technique approved in advanced by the instructors), as well as clean, well-written code.
-- A technical report aimed at fellow data scientists that explains your process and findings.
-- A public presentation of your findings aimed primarily at laypeople.
+---
 
-### **[Capstone, Part 1: Topic Ideas](./part_01/)**
+## Data Collection
 
-Get started by choosing **three potential topics**.  might be a domain you are familiar with, a particular interest you have, something that affects a community you are involved in, or an area that relates to a field you wish to work in.
+* The data was obtained from Kaggle.
+* The data collected by Austin Reese from craigslist ([*Kaggle*](https://www.kaggle.com/datasets/austinreese/craigslist-carstrucks-data/data)) 
 
-One of the best ways to get feedback on your ideas quickly is to share them with others. That's why for Part 1 of your Capstone project, you'll share three potential topics.
+### Data Dictionary
 
-**The ultimate choice of topic for your capstone project is yours!** However, this is research and development work. Sometimes projects that look easy can be difficult and vice versa. It never hurts to have a second (or third) option available. Not sure where to start? Need some inspiration? Check out some past student capstone projects at the bottom of this README: [CLICK HERE](#example-projects)
+|Feature|Type|Dataset|Description|
+|---|---|---|---|
+|price|float|Used Car Dataset|The sell price of used car| 
+|year|float|Used Car Dataset|Year of manufacture |
+|manufacturer|object|Used Car Dataset|The manufacturer of car|
+|condition|object|Used Car Dataset|Condition of used car|
+|cylinders|object|Used Car Dataset|Type of used car cylinder|
+|fuel|object|Used Car Dataset|Type of used car fuel| 
+|odometer|float|Used Car Dataset|The mile of used car|
+|title_status|object|Used Car Dataset|Used car title status|
+|transmission|object|Used Car Dataset|Transmission of used car|
+|drive|object|Used Car Dataset|Drives used car|
+|size|object|Used Car Dataset|Sizes used car|
+|type|object|Used Car Dataset|Types of used car|
+|paint_color|object|Used Car Dataset|The color of used car|
+|state|object|Used Car Dataset|States where used car located|
 
-- **Goal**: Share three potential topics and/or potential sources of data.
-- **Due**: See Google Classroom.
+## Imputing Method
+* KNN imputer
+* Mean and mode imputer base on different range of price
+    * 1000 to 15000
+    * 15000 to 50000
+    * 50000 to 200000
 
-<!--
-### **Capstone, Part 1.5:**
+## Table of Result
 
-In [this Google Sheet](https://docs.google.com/spreadsheets/d/1OShtZSiaWIzLOJVVRs8yEkHNLqvNa4Sps4Jj7D5OQaM/edit?usp=sharing) share your **one-sentence** problem statement **and** whether you have your dataset in hand.
-- **Due**: See Google Classroom.
--->
+|Name of Model|Train score|Test score (R2)|RMSE|
+|---|---|---|---|
+|Baseline (Null model)|0.00|0.00|14504.270|
+|Linear Regression (mean imputer)|0.514|0.521|10081.260| 
+|RandomForest Regressor (mean imputer)|0.982|0.874|5172.700|
+|ExtraTrees Regresssor (mean imputer)|0.952|0.874|5161.382|
+|AdaBoost Regressor (mean imputer)|0.961|0.872|5217.493|
+|GradientBoosting Regressor (mean imputer)|0.777|0.775|6913.230|
+|RandomForest Regressor(pipeline)|0.982|0.874|5167.861|
+|ExtraTrees Regressor(pipeline)|0.999|0.873|5179.484|
+|RandomForest Regressor (KNN imputer)|0.925|0.836|5853.053|
+|ExtraTrees Regresssor (KNN imputer)|0.941|0.840|5781.103|
+|AdaBoost Regressor (KNN imputer)|0.953|0.836|5867.411|
 
-### **[Capstone, Part 2: Problem Statement + EDA](./part_02/)**
 
-For Part 2, provide a clear statement of the problem that you have chosen and an overview of your approach to solving that problem. Summarize your objectives, goals & success metrics, and any risks & assumptions. Outline your proposed methods and models, perform your initial EDA, and summarize the process. **Your data should be in hand by this point in the process!**
 
-**Again, your data should be in hand by now!**
+## Discussion
 
-- **Goal**: Describe your proposed approach and summarize your initial EDA in a document you push to your GitHub repo.
-- **Due**: See Google Classroom.
+* A large number of used car are belong to 2018, 2017, and 2013.
+* The top 5 manufacturers that have highest number of car are:
+    * ford - American
+    * chevrolet - American
+    * toyota - Japanese
+    * honda - Japanese
+    * nissan - Japanese
+* Most of used cars are belong to Sedan and SUV follow by pickup and truck. However, the total average price of pickup and truck are approximately double the total average price of sedan and SUV.
+* California, Florida, and Texas are the top 3 states that have highest number of used car are selling.
+* White, black and silver are the top three colors that have highest number of car and average of price
 
-### **[Capstone, Part 3: Progress Report + Preliminary Findings](./part_03/)**
+## Conclusions and Recommendations
 
-In Part 3, you'll create a progress report of your work to get feedback along the way. Describe your approach, initial results, and any setbacks or lessons learned so far. Your report should include updated visual and statistical analysis of your data. You’ll also meet with your instructional team to get feedback on your results so far!
+* The best performance model is Extra Trees Regressor with lowest RMSE and highest R2 score on both imputing methods.
+* Linear Regression and Gradient Boosting have lowest train score and test score but the different between train and test score are small, those models are less overfit.
+* The others models have train score higher than test score, those models are overfit but the test scores are improved.
+* Tuning hyperparameters can be apply to help improve the overfit.
+* Keep the hyperparameter the same, train score, test score, and RMSE will be slightly different when apply the pipeline and without applying the pipeline.
+* Using the same model and hyperparameters, models with KNN imputer are less performance than mean imputer. However, those models with KNN imputer are less overfit than those models with mean imputer.
+* Due to the limit of computer memory, the cosine similarity was not be able to run for this dataset. Limit the price of the data to limit the amount of data for cosine similarity. 
+* The cosine similarity works when limit the data to a small dataset.
+* Brand recommender, Price recommender, and All recommender can be use as a recommender system. Those recommender systems do not provide a perfect result but those recommender systems will give a list of used car base on some features that customers are looking for.
 
-- **Goal**: Discuss progress and setbacks, include visual and statistical analysis, in your GitHub repo.
-- **Due**: See Google Classroom.
 
-### **[Capstone, Part 4: Report Writeup + Technical Analysis](./part_04/)**
 
-Your goal for Part 4 is to develop a technical document (in the form of Jupyter notebook) that could be shared with your peers.
 
-Document your research and analysis including a summary, an explanation of your modeling approach as well as the strengths and weaknesses of any variables in the process. You should provide insight into your analysis, using best practices like cross validation or applicable prediction metrics.
 
-- **Goal**: Detailed report and code with a summary of your statistical analysis, model, and evaluation metrics.
-- **Due**: See Google Classroom.
 
-### **[Capstone, Part 5: Presentation + Recommendations](./part_05/)**
-
-Whether during an interview or as part of a job, you will frequently have to present your findings to business partners and other interested parties - many of whom won't know anything about data science! That's why for Part 5, you'll create a presentation of your previous findings with a semi-technical audience in mind.
-
-You should already have the analytical work complete, so now it's time to clean up and clarify your findings. Create a slide deck that explains your data, visualizes your model, describes your approach, articulates strengths and weaknesses, and presents specific recommendations. Be prepared to explain and defend your model to an inquisitive audience! An interactive app is a great addition to your project.
-
-- **Goal**: Detailed presentation deck that relates your data, model, and findings to a non-technical audience.
-- **Due**: See Google Classroom.
-
-<a name="example-projects"></a>
-### Example Projects
-
-Below are some great capstone projects submitted by past DSI students!
-
-* [Kenya Chauche, DSI-10](https://github.com/KenyaChauche/sonnet-generation) built a natural language generation program trained on Shakespeare's sonnets
-* [Molly Baird, DSI-11](https://github.com/mollycbaird/ComputerVisionSET) wanted to computerize the game of SET, and succeeded admirably
-* [Daniel Johnston, DSI-2](https://github.com/djkjohnston/ML_from_scratch_GA_DSI_Capstone) built several key machine learning algos from scratch in python, comparing their performance to the scikit-learn implementations.  
-* [Alex Schultz, DSI-3](https://github.com/fullquartpress/DSI-Capstone) predicts spot coffee (commodity coffee bean) price changes from sentiment analysis of an industry trade publication.  
-* [Brice Walker, DSI-3](https://github.com/bricewalker/Hey-Jetson) wanted to play with his Jetson GPU and built voice transcription _from scratch_.  
-* [Caitlin Streamer, DSI-4](https://github.com/c-streams/Pneumonia) worked on a Kaggle dataset to predict pneumonia from chest X-rays.  
-* [Brian Osgood, DSI-04](https://github.com/osgoodbl/PyFilter) built a bot that crawls twitter and identifies whether an image tagged 'lamborghini' is actually a lamborghini.  
-* [Frank Turner, DSI-04](https://github.com/frankturnerv/Fashioning_Models_from_Fashion_Models) uses image recognition to identify the colors used in a fashion season's palette.  
-* [DSI-06, team](https://github.com/balak4/Optimizing-Evac-Routes) This is actually the DSI-6 group project. It's here because it's really, really impressive.  
-* [Amy Taylor, DSI-06](https://github.com/amytaylor330/CNN_for_Dance_Music_Classification_repost) wanted to quantify the difference between types of dance music.  
-* [Veronica Giannotta, DSI-06](https://github.com/vgiannotta/Emotional-Impacts-of-Viral-Content) delved into the dark side of the internet and evaluated the emotional sentiment of social media content that goes viral.
-* [Derek Steffan, DSI-07](https://github.com/dsteffan/twitch_chat_analysis) automates the process of creating twitch highlight reels using sentiment analysis, markov chains, and Bayesian analysis.  
-* [Sebastian Alvis, League of Legends](https://github.com/salvis2/SpringboardAlvis/tree/master/capstone_project_1) Not a GA capstone, but a very compelling case for applying data science to your interests to come up with a good capstone.

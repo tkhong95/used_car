@@ -3,7 +3,7 @@ import pandas as pd
 import pickle
 import streamlit as st
 from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.feature_extraction.text import TfidfVectorizer
+from PIL import Image
 
 st.write("""
 # Used Car Price Prediction App
@@ -74,70 +74,10 @@ with open('etr_pipe_price.pkl',"rb") as f:
     
 predicttion = model.predict(input_df)
 st.subheader("Predicted Used Car Value")
-st.write(f"${predicttion[0]}")
-
-# Recommendation system
-
-# st.write('What used car is ')
-
-df = pd.read_csv('df_model.csv')
-df.head()
-
-# def brand_recommender(manufacturer,year,car_type,price_range):
-#     data = df.loc[(df['year']==year) & (df['type']==car_type)
-#                  & ((df['price']>=price_range[0]) & (df['price']<=price_range[1]))]
-#     data.reset_index(level =0, inplace = True)
-    
-#     indices = pd.Series(data.index, index=data['manufacturer'])
-    
-#     # Converting the car manufacturer into vectors unigrams and bigrams
-#     cvec = CountVectorizer(ngram_range=(1, 2), stop_words='english')
-#     cvec_matrix = cvec.fit_transform(data['manufacturer'])
-    
-#     # Apply Cosine Similarity
-#     cs = cosine_similarity(cvec_matrix)
-    
-#     # Sort by manufacturer and get the top 6 car with highest similiraty score
-#     score = sorted(list(enumerate(cs[indices[manufacturer]])), reverse=True)[0:6]
-
-#     # car indicies
-#     car_indices = [i[0] for i in score]
-   
-#     # Top 6 car recommendations
-#     car_recommend = data[['price','manufacturer','type','year','condition','fuel','title_status',
-#                 'transmission','paint_color']].iloc[car_indices]
-#     return car_recommend
-
-# def rec_user_input():
-#     manufacturer = st.sidebar.selectbox('Brands Alphabetically',('Acura', 'Alfa-Romeo', 
-#        'Aston-Martin', 'Audi', 'BMW', 'Buick',
-#        'Cadillac', 'Chevrolet', 'Chrysler', 'Datsun', 'Dodge', 'Ferrari',
-#        'Fiat', 'Ford', 'Gmc', 'Harley-Davidson', 'Honda', 'Hyundai',
-#        'Infiniti', 'Jaguar', 'Jeep', 'Kia', 'Land Rover', 'Lexus',
-#        'Lincoln', 'Mazda', 'Mercedes-Benz', 'Mercury', 'Mini',
-#        'Mitsubishi', 'Morgan', 'Nissan', 'Pontiac', 'Porsche', 'Ram',
-#        'Saturn', 'Subaru', 'Tesla', 'Toyota', 'Volkswagen',
-#        'Volvo'))
-#     year = st.sidebar.selectbox('Year', list(reversed(range(1900,2022))))
-#     types = st.sidebar.selectbox('Type of Car',('SUV', 'sedan', 'truck', 'van', 'mini-van',
-#                                                 'convertible', 'coupe', 'hatchback', 'offroad', 
-#                                                 'bus','pickup', 'wagon', 'other'))
+st.write(f"${predicttion[0]:,.2f}")
 
 
-# # st.write(rec)
 
-# # import streamlit as st
 
-# # # Create a Streamlit app
-# # st.title("Range of Numbers Input")
-
-# # # Define the input range
-# # min_value = st.number_input("Min Value", value=0)
-# # max_value = st.number_input("Max Value", value=100)
-
-# # # Display the selected range
-# # st.write(f"You selected a range from {min_value} to {max_value}")
-
-# st.balloons()
 
 
