@@ -10,10 +10,11 @@ st.write("""
 
 This app only predicts the price of used car
 
-Data obtained from Kaggle
 """)
 
 st.sidebar.header("User Input Parameters")
+
+# learned from multiple youtube video (Data Professor Streamlit)
 
 def user_input_features():
     year = st.sidebar.selectbox('Year', list(reversed(range(1900,2022))))
@@ -74,7 +75,7 @@ with open('etr_pipe_price.pkl',"rb") as f:
     
 predicttion = model.predict(input_df)
 st.subheader("Predicted Used Car Value")
-st.write(f"${predicttion[0]:,.2f}")
+st.write(f"Your used car price is ${predicttion[0]:,.2f}")
 
 
 

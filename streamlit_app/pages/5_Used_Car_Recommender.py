@@ -64,6 +64,3 @@ def all_recommender(manufacturer,year,car_type,min_price,max_price,number_result
 st.write(all_recommender(input_feature['manufacturer'],input_feature['year'],input_feature['car_type'],
     input_feature['min_price'], input_feature['max_price'],input_feature['number_result']))
 
-#https://www.ford.com
-image = Image.open('car_2.png')
-st.image(image)
